@@ -1,36 +1,116 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 MetaMask + Nibiru EVM Connection with Next.js
 
-## Getting Started
+A simple Next.js hook to connect MetaMask to **Nibiru EVM** and switch networks seamlessly.
 
-First, run the development server:
+## 🌟 Features
+
+- ✅ Connect MetaMask to **Nibiru EVM**
+- ✅ Switch between Ethereum and Nibiru
+- ✅ Auto-detect provider with **ethers.js**
+- ✅ Fully optimized for **Next.js + TypeScript**
+
+---
+
+## 📦 Installation
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/your-username/your-repo-name.git
+cd your-repo-name
+```
+
+### 2️⃣ Install Dependencies
+
+```bash
+npm install
+```
+
+### 3️⃣  Run the Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The app should now be running on <http://localhost:3000/>.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚀 Usage
 
-## Learn More
+### 1️⃣ Import the Hook in a Component
 
-To learn more about Next.js, take a look at the following resources:
+```typescript
+import { useMetamask } from "@/hooks/useMetamask";
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+const ConnectWallet = () => {
+  const { account, connectWallet, switchToNibiru } = useMetamask();
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+  return (
+    <div>
+      {account ? (
+        <p>Connected: {account}</p>
+      ) : (
+        <button onClick={connectWallet}>Connect MetaMask</button>
+      )}
+      <button onClick={switchToNibiru}>Switch to Nibiru</button>
+    </div>
+  );
+};
 
-## Deploy on Vercel
+export default ConnectWallet;
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 2️⃣ Ensure the Hook is a Client Component
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+At the top of your useMetamask.ts and ConnectWallet.tsx, add:
+
+```tsx
+"use client";
+```
+
+## 🔧 Customizing the Nibiru EVM Parameters
+
+Modify NIBIRU_PARAMS in useMetamask.ts to update chain details:
+
+```tsx
+const NIBIRU_PARAMS = {
+  chainId: "0x1AF4",
+  chainName: "Nibiru",
+  nativeCurrency: {
+    name: "NIBI",
+    symbol: "NIBI",
+    decimals: 18,
+  },
+  rpcUrls: ["https://evm-rpc.nibiru.fi/"],
+  blockExplorerUrls: ["https://nibiscan.io/"],
+};
+```
+
+## 📜 Environment Variables
+
+Ensure your `.env.local` file contains:
+
+```ini
+NEXT_PUBLIC_RPC_URL=https://evm-rpc.nibiru.fi/
+```
+
+## 📂 Project Structure
+
+```bash
+/your-repo-name
+│── /hooks
+│   ├── useMetamask.ts  # MetaMask connection logic
+│── /components
+│   ├── ConnectWallet.tsx  # UI component for wallet connection
+│── /pages
+│   ├── index.tsx  # Home page integrating MetaMask
+│── package.json
+│── tsconfig.json
+│── README.md
+```
+
+## 🔗 Resources
+
+- 📝 [Nibiru Chain Docs](https://nibiru.fi/docs)
+- 🦊 [MetaMask Docs](https://docs.metamask.io/)
+- ⚡ [Ethers.js](https://docs.ethers.org/v6/)
